@@ -163,7 +163,14 @@ public class VolumeControlV2 extends ApplicationAdapter{
 		}
 		float volumeFloat=(volumeBarHeight/maxVolumeBarHeight)*100;
 		volume=(int) volumeFloat;
-		System.out.println(volume);
+		String homeDirectory = System.getProperty("user.home");
+		try {
+			Process p = Runtime.getRuntime().exec("pactl set-sink-volume 0 "+volume+"%");
+			p.waitFor();
+
+		}catch(Exception e){
+			System.err.println(e);
+		}
 
 		batch.end();
 
